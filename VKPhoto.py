@@ -1,9 +1,12 @@
 import requests
 import os
 import json
-from VK_TOKEN import token_vk
+# from VK_TOKEN import token_vk
 from tqdm import tqdm
 
+with open(os.path.join(os.getcwd(), 'token.txt'), 'r') as token_file:
+    token_vk = token_file.readline().strip()
+print(token_vk)
 
 def main():
     class VkDownloader_photo:
@@ -49,7 +52,7 @@ def main():
                     for size in photo['sizes']:
                         if size['height'] >= max_size:
                             max_size = size['height']
-                    if photo['likes']['count'] not in max_photo.keys():
+                    if photo['likes']['count'] not in max_photo:
                         max_photo[photo['likes']['count']] = size['url']
                         photos_info['file_name'] = f"{photo['likes']['count']}.jpg"
                     else:
@@ -77,7 +80,7 @@ def main():
 
             self.token = token
 
-        def folder_creation(self):
+        def create_folder(self):
             url = f'https://cloud-api.yandex.net/v1/disk/resources/'
             headers = {'Content-Type': 'application/json',
                        'Authorization': f'OAuth {ya_token}'}
@@ -105,7 +108,7 @@ def main():
     ya_token = str(input('Введите ваш токен ЯндексДиск: '))
     uploader = YaUploader(ya_token)
     folder_name = str(input('Введите имя папки на ЯндексДиске: '))
-    uploader.folder_creation()
+    uploader.create_folder()
 
     photos_list = os.listdir('photo_vk')
     count = 0
