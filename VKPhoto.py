@@ -1,12 +1,12 @@
 import requests
 import os
 import json
-# from VK_TOKEN import token_vk
 from tqdm import tqdm
+
 
 with open(os.path.join(os.getcwd(), 'token.txt'), 'r') as token_file:
     token_vk = token_file.readline().strip()
-print(token_vk)
+
 
 def main():
     class VkDownloader_photo:
